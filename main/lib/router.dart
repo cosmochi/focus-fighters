@@ -2,6 +2,8 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:basic/authentication_pages/login.dart';
+import 'package:basic/authentication_pages/signup.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +24,13 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
+      builder: (context, state) => const LoginPage(key: Key('login')),
+    ),
+    GoRoute(path: '/signup',
+    builder: (context, state) => const SignUpPage(key: Key('signup'),),
+    ),
+    GoRoute(
+      path: '/mainMenu',
       builder: (context, state) => const MainMenuScreen(key: Key('main menu')),
       routes: [
         GoRoute(

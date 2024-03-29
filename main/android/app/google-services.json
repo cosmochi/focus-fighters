@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "793788851035",
+    "project_id": "focus-fighters",
+    "storage_bucket": "focus-fighters.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:793788851035:android:e0d1392152587417f8f07e",
+        "android_client_info": {
+          "package_name": "com.example.basic"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMRywyMXtiHECqGkcbY43G5x8YYdQo_GA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
