@@ -4,6 +4,8 @@
 
 import 'dart:developer' as dev;
 
+import 'package:basic/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,6 +33,9 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   // Put game into full screen mode on mobile devices.
+    await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   // Lock the game to portrait mode on mobile devices.
   await SystemChrome.setPreferredOrientations([
@@ -75,7 +80,8 @@ class MyApp extends StatelessWidget {
           final palette = context.watch<Palette>();
 
           return MaterialApp.router(
-            title: 'My Flutter Game',
+            debugShowCheckedModeBanner: false,
+            title: 'Focus Fighters',
             theme: ThemeData.from(
               colorScheme: ColorScheme.fromSeed(
                 seedColor: palette.darkPen,
@@ -105,3 +111,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
