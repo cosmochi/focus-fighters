@@ -2,24 +2,25 @@ import 'package:basic/authentication/firebase_auth.dart';
 import 'package:basic/authentication_pages/form_container_widget.dart';
 import 'package:basic/authentication_pages/signup.dart';
 import 'package:basic/main_menu/main_menu_screen.dart';
-import 'package:basic/router.dart';
 import 'package:basic/toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 
 class LoginPage extends StatefulWidget {
+  final String? username;
   
-  const LoginPage({super.key});
+  const LoginPage({Key? key, this.username}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  
+
   bool currentlySigningIn = false;
   final FirebaseAuthService _auth = FirebaseAuthService();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -37,6 +38,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    String username = widget.username ?? '';
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -130,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(width: 5,),
                       GestureDetector(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage()));
+                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => SignUpPage()), (route) => false);
                         },
                         child: Text("Sign Up", style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold)),
                       )
@@ -159,8 +161,8 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     if (user != null) {
-      showToast(message: "User has successfully signed in");
-      Navigator.push(context, MaterialPageRoute(builder: (context) => MainMenuScreen()));
+      showToast(message: "Welcome ");
+      Navigator.pushNamed(context, "/home");
     }
   }
 
@@ -182,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
         );
 
         await _firebaseAuth.signInWithCredential(credential);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => MainMenuScreen()));
+        Navigator.pushNamed(context, "/home");
       }
 
     }catch(e) {
@@ -191,7 +193,5 @@ class _LoginPageState extends State<LoginPage> {
 
 
   }
-
-
 
 }

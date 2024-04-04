@@ -100,7 +100,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       SizedBox(width: 5,),
                       GestureDetector(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
                         },
                         child: Text("Login", style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold)),
                       )
@@ -133,7 +133,9 @@ setState(() {
 
   if (user != null) {
     showToast(message: "User $username has been successfully created");
-    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
-  } 
+    Navigator.pushNamed(context, "/login", arguments: {'username': username});
+  } else {
+    showToast(message: "Error");
+  }
   }
 }
