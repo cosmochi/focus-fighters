@@ -1,31 +1,17 @@
-// Copyright 2022, the Flutter project authors. Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-import 'dart:developer' as dev;
-
-import 'package:basic/firebase_options.dart';
-import 'package:basic/home_page.dart';
-import 'package:basic/initial_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:logging/logging.dart';
-import 'package:provider/provider.dart';
 
-import 'app_lifecycle/app_lifecycle.dart';
-import 'audio/audio_controller.dart';
-import 'player_progress/player_progress.dart';
-import 'settings/settings.dart';
-import 'style/palette.dart';
+import 'package:basic/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+import 'welcome_page.dart';
 import 'authentication_pages/login.dart';
 import 'authentication_pages/signup.dart';
+import 'home_page.dart';
 
 Future main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp(
+  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
@@ -38,21 +24,24 @@ Future main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Firebase',
-      routes: {
-        '/': (context) => InitialScreen(
-          // Here, you can decide whether to show the LoginPage or HomePage based on user authentication
-          child: LoginPage(),
+        title: 'UI Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
         ),
-        '/login': (context) => LoginPage(),
-        '/signUp': (context) => SignUpPage(),
-        '/home': (context) => HomePage(),
-      },
-    );
+        debugShowCheckedModeBanner: false,
+        routes: {
+          '/': (context) => WelcomePage(
+                child: LoginPage(),
+              ),
+          '/login': (context) => LoginPage(),
+          '/signUp': (context) => SignUpPage(),
+          '/home': (context) => HomePage(title: 'Main Menu'),
+        });
   }
 }

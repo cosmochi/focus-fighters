@@ -1,33 +1,28 @@
 import 'package:flutter/material.dart';
-
+import 'settings_page.dart';
+import 'profile_page.dart';
+import 'timer_page.dart';
+import 'friend_page.dart';
+import 'shop_page.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key, required this.title});
+
+  final String title;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Simple Homepage'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Welcome!',
-              style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 20.0),
-            TextButton(
-              onPressed: () {
-                // Add functionality here
-              },
-              child: Text('Start'),
-            ),
-          ],
-        ),
+      body: PageView(
+        scrollDirection: Axis.horizontal,
+        controller: PageController(initialPage: 2),
+        children: [
+          SettingsScreen(),
+          ProfilePage(),
+          TimerPage(),
+          FriendsPage(),
+          ShopPage(),
+        ],
       ),
     );
   }
