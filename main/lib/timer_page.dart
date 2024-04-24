@@ -4,24 +4,19 @@ class TimerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Screen', style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.grey,
-      ),
-      body: Stack(
-        children: [
-          Image.asset(
-            'assets/images/homescreenbackground.jpg',
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,
+        appBar: AppBar(
+          title: const Text('Home Screen'),
+        ),
+        body: Stack(children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/timer_background.jpg',
+              fit: BoxFit.cover,
+            ),
           ),
-          const Text(
-            '',
-            style: TextStyle(fontSize: 24),
+          const Center(
+            child: Text('Timer Page Content'),
           ),
-        ],
-      ),
-    );
+        ]));
   }
 }
