@@ -8,7 +8,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
-    super.build(context);  // This needs to be called with AutomaticKeepAliveClientMixin
+    super.build(context);  // Necessary for keeping the state with AutomaticKeepAliveClientMixin
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings Screen'),
@@ -21,8 +21,16 @@ class _SettingsScreenState extends State<SettingsScreen> with AutomaticKeepAlive
               fit: BoxFit.cover,
             ),
           ),
-          const Center(
-            child: Text('Settings Page Content'),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Transform.translate(
+              offset: Offset(0, 0), // Adjust this value to control the position from the bottom
+              child: Image.asset(
+                'assets/images/wisp-upscale.gif', // Adjust this with the actual asset path
+                width: 1000, // Width of the image
+                height: 1000, // Height of the image
+              ),
+            ),
           ),
         ],
       ),
@@ -30,5 +38,5 @@ class _SettingsScreenState extends State<SettingsScreen> with AutomaticKeepAlive
   }
 
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => true; // Ensures the page state is kept when navigating away
 }

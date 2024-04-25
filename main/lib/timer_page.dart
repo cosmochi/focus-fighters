@@ -16,13 +16,13 @@ class _TimerPageState extends State<TimerPage> with AutomaticKeepAliveClientMixi
   bool _isRunning = false;
 
   @override
-  bool get wantKeepAlive => true; // Required for AutomaticKeepAliveClientMixin
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
     super.initState();
     if (_timerManager.remainingTime == 0) {
-      _timerManager.remainingTime = 60;  // Or another default starting time
+      _timerManager.remainingTime = 60;
     }
   }
 
@@ -42,8 +42,8 @@ class _TimerPageState extends State<TimerPage> with AutomaticKeepAliveClientMixi
           _timer?.cancel();
           setState(() {
             _isRunning = false;
-            _timer = null;  // Make sure to nullify the timer
-            _selectedTime = 0;  // Reset the selected time
+            _timer = null;
+            _selectedTime = 0;
           });
         }
       });
@@ -56,7 +56,7 @@ class _TimerPageState extends State<TimerPage> with AutomaticKeepAliveClientMixi
       _isRunning = false;
       _remainingTime = 0;
       _selectedTime = 0;
-      _timer = null;  // Nullify the timer here as well
+      _timer = null;
     });
   }
 
@@ -68,7 +68,7 @@ class _TimerPageState extends State<TimerPage> with AutomaticKeepAliveClientMixi
 
   @override
   Widget build(BuildContext context) {
-    super.build(context); // This needs to be called when using AutomaticKeepAliveClientMixin
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Timer"),
@@ -87,69 +87,65 @@ class _TimerPageState extends State<TimerPage> with AutomaticKeepAliveClientMixi
               children: <Widget>[
                 Image.asset(
                   _isRunning ? 'assets/images/timer_gif.gif' : 'assets/images/timer_freeze.png',
-                  width: 200,
-                  height: 200,
+                  width: 175,
+                  height: 175,
                 ),
-                SizedBox(height: 25),
-                Stack(
-                  alignment: Alignment.center,
-                  children: <Widget>[
-                    Container(
-                      width: 300,
-                      height: 300,
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(150, 0, 0, 0),
-                        shape: BoxShape.circle,
+                SizedBox(height: 15),
+                Container(
+                  width: 275,
+                  height: 275,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(150, 0, 0, 0),
+                    shape: BoxShape.circle,
+                  ),
+                  child: SleekCircularSlider(
+                    appearance: CircularSliderAppearance(
+                      size: 275,
+                      angleRange: 360,
+                      startAngle: 270,
+                      customWidths: CustomSliderWidths(
+                        trackWidth: 10,
+                        progressBarWidth: 15,
+                        shadowWidth: 0,
+                      ),
+                      customColors: CustomSliderColors(
+                        trackColor: Colors.grey,
+                        progressBarColor: Theme.of(context).primaryColor,
+                        shadowColor: Colors.transparent,
+                      ),
+                      infoProperties: InfoProperties(
+                        mainLabelStyle: TextStyle(
+                          fontSize: 90,
+                          color: Colors.white,
+                          fontFamily: 'Pixel',
+                        ),
+                        modifier: (double value) {
+                          final minutes = (_remainingTime / 60).floor();
+                          final seconds = _remainingTime % 60;
+                          return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+                        },
                       ),
                     ),
-                    SleekCircularSlider(
-                      appearance: CircularSliderAppearance(
-                        size: 300,
-                        angleRange: 360,
-                        startAngle: 270,
-                        customWidths: CustomSliderWidths(
-                          trackWidth: 10,  // Increase the track width for better touch interaction
-                          progressBarWidth: 15,  // Increase the progress bar width
-                          shadowWidth: 0,
-                        ),
-                        customColors: CustomSliderColors(
-                          trackColor: Colors.grey,
-                          progressBarColor: Theme.of(context).primaryColor,
-                          shadowColor: Colors.transparent,
-                        ),
-                        infoProperties: InfoProperties(
-                          mainLabelStyle: TextStyle(
-                            fontSize: 60,
-                            color: Colors.white,
-                          ),
-                          modifier: (double value) {
-                            final minutes = (_remainingTime / 60).floor();
-                            final seconds = _remainingTime % 60;
-                            return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
-                          },
-                        ),
-                      ),
-                      min: 0,
-                      max: 60,
-                      initialValue: _selectedTime,
-                      onChange: (!_isRunning) ? (double value) {
-                        setState(() {
-                          _selectedTime = (value * 4).round() / 4;  // Ensures increments are in 0.25 (15 seconds)
-                          _remainingTime = (_selectedTime * 60).toInt();
-                        });
-                      } : null,
-                    ),
-                  ],
+                    min: 0,
+                    max: 60,
+                    initialValue: _selectedTime,
+                    onChange: (!_isRunning) ? (double value) {
+                      setState(() {
+                        _selectedTime = (value * 4).round() / 4;
+                        _remainingTime = (_selectedTime * 60).toInt();
+                      });
+                    } : null,
+                  ),
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 15),
                 ElevatedButton(
                   onPressed: _isRunning ? _cancelTimer : _startTimer,
                   child: Text(
                     _isRunning ? 'Cancel' : 'Start',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 30,  // Increased font size
-                      fontWeight: FontWeight.bold,
+                      fontSize: 60,
+                      fontFamily: 'Pixel',
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
@@ -157,7 +153,15 @@ class _TimerPageState extends State<TimerPage> with AutomaticKeepAliveClientMixi
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(26.0),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+                  ),
+                ),
+                Transform.translate(
+                  offset: Offset(0, -30), // Negative Y offset to move the image upwards
+                  child: Image.asset(
+                    _isRunning ? 'assets/images/hero1_fight.gif' : 'assets/images/hero1.gif',
+                    width: 300,
+                    height: 300,
                   ),
                 ),
               ],

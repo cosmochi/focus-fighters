@@ -21,8 +21,16 @@ class _FriendsPageState extends State<FriendsPage> with AutomaticKeepAliveClient
               fit: BoxFit.cover,
             ),
           ),
-          const Center(
-            child: Text('Friends Page Content'),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Transform.translate(
+              offset: Offset(0, -40), // Moves the asset up from the very bottom edge of the screen
+              child: Image.asset(
+                'assets/images/girl1.png', // Replace with your actual asset path
+                width: 350, // Set the width as needed
+                height: 350, // Set the height as needed
+              ),
+            ),
           ),
         ],
       ),
